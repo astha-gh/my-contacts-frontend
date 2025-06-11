@@ -8,7 +8,6 @@ const Signup = () => {
         email: '',
         password: ''
     });
-
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
@@ -18,73 +17,39 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setMessage('Registering...');
+
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/register`,{
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/register`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                setMessage("Signup successful");
-                setFormData({ username: '', email: '', password: '' });
-                setTimeout(() => navigate('/login'), 1500);
-            } else {
-                setMessage(data.message || "Signup failed.");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Signup failed');
             }
-        } catch (error) {
-            console.error("Error during signup:", error);
-            setMessage("Something went wrong.");
+
+            const data = await response.json();
+            setMessage('Signup successful! Redirecting...');
+            navigate('/login');
+        } catch (err) {
+            setMessage(err.message || 'Something went wrong');
         }
     };
 
     return (
-        <div className="signup-container">
-            <div className="form-card">
-                <h2 className="form-title">Create Your Account</h2>
-                <form onSubmit={handleSubmit} className="auth-form">
-                    <div className="form-group">
-                        <input
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <button type="submit" className="btn-submit">Register</button>
-                </form>
-                {message && <p className={`message ${message.includes("successful") ? "success" : "error"}`}>{message}</p>}
-                <p className="login-link">Already have an account? <Link to="/login" className="link">Login here</Link></p>
-            </div>
+        <div className="auth-container">
+            <h2>Signup</h2>
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+                <button type="submit">Signup</button>
+            </form>
+            {message && <p className="message">{message}</p>}
+            <p>Already have an account? <Link to="/login">Login</Link></p>
         </div>
     );
 };

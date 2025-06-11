@@ -25,53 +25,30 @@ const Login = () => {
                 body: JSON.stringify(formData),
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('token', data.accessToken);
-                setMessage("Login successful!");
-                setTimeout(() => navigate('/dashboard'), 1000);
-            } else {
-                setMessage(data.message || "Login failed.");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Login failed');
             }
-        } catch (error) {
-            console.error("Login error:", error);
-            setMessage("Something went wrong.");
+
+            const data = await response.json();
+            localStorage.setItem('token', data.token);
+            setMessage('Login successful!');
+            navigate('/dashboard');
+        } catch (err) {
+            setMessage(err.message || 'Something went wrong');
         }
     };
 
     return (
         <div className="auth-container">
-            <div className="form-card">
-                <h2 className="form-title">Welcome Back</h2>
-                <form onSubmit={handleSubmit} className="auth-form">
-                    <div className="form-group">
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <button type="submit" className="btn-submit">Login</button>
-                </form>
-                {message && <p className={`message ${message.includes("successful") ? "success" : "error"}`}>{message}</p>}
-                <p className="auth-link">Don't have an account? <Link to="/signup" className="link">Sign up here</Link></p>
-            </div>
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+                <button type="submit">Login</button>
+            </form>
+            {message && <p className="message">{message}</p>}
+            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
     );
 };
