@@ -31,7 +31,6 @@ const Signup = () => {
                 throw new Error(errorData.message || 'Signup failed');
             }
 
-            const data = await response.json();
             setMessage('Signup successful! Redirecting...');
             navigate('/login');
         } catch (err) {
