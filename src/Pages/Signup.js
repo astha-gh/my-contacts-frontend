@@ -27,6 +27,8 @@ const Signup = () => {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 setMessage("Signup successful");
                 setFormData({ username: '', email: '', password: '' });
