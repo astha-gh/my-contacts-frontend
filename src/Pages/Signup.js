@@ -24,13 +24,8 @@ const Signup = () => {
             return;
         }
 
-        if (formData.password.length < 6) {
-            setMessage("Password must be at least 6 characters");
-            return;
-        }
-        
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/register`, {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}api/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -38,9 +33,9 @@ const Signup = () => {
                 body: JSON.stringify(formData)
             });
 
-            console.log("Response status:", response.status); 
+           
             const data = await response.json();
-            console.log("Response data:", data); 
+            
 
             if (response.ok) {
                 setMessage("Signup successful");
@@ -50,7 +45,7 @@ const Signup = () => {
                 setMessage(data.message || "Signup failed.");
             }
         } catch (error) {
-            console.error("Full error during signup:", error);
+            
             setMessage("Something went wrong. Check console for details.");
         }
     };

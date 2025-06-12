@@ -20,7 +20,7 @@ const Dashboard = () => {
 
         const fetchContacts = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/contact` , {
+                const response = await fetch(`${process.env.REACT_APP_BASE_URL}api/contact` , {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ const Dashboard = () => {
         setMessage("Adding contact...");
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/contact` , {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}api/contact` , {
                 method: "POST",
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -86,7 +86,7 @@ const Dashboard = () => {
 
     const handleSave = async (id) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/contact/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}api/contact/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -122,7 +122,7 @@ const Dashboard = () => {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/contact/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}api/contact/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
