@@ -113,7 +113,6 @@ const Dashboard = () => {
             setContacts([...contacts, newContactData]);
             setNewContact({ name: '', email: '', phone: '' });
             setImage(null);
-            setUrl('');
             setMessage("Contact added successfully!");
         } catch (error) {
             setMessage(error.message || "Failed to add contact");
