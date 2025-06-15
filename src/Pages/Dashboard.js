@@ -13,7 +13,6 @@ const Dashboard = () => {
     const DEFAULT_PHOTO = "https://res.cloudinary.com/dislhmbst/image/upload/v1749119635/Screenshot_2025-06-05_160345_xy7pgi.png";
 
     const [image, setImage] = useState(null);
-    const [url, setUrl] = useState("");
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
@@ -163,7 +162,7 @@ const Dashboard = () => {
                 const updatedContact = await response.json();
                 setContacts(contacts.map(c => c._id === id ? updatedContact : c));
                 setEditingId(null);
-                setImage(null); // reset selected image
+                setImage(null); 
                 setMessage("Contact updated successfully");
             } else {
                 const errorData = await response.json();
@@ -200,25 +199,7 @@ const Dashboard = () => {
             setIsLoading(false);
         }
     };
-
-    const uploadImageToCloudinary = async () => {
-        const data = new FormData();
-        data.append("file", image);
-        data.append("upload_preset", "insta-clone");
-        data.append("cloud_name", "dislhmbst");
-
-        try {
-            const res = await fetch("https://api.cloudinary.com/v1_1/dislhmbst/image/upload", {
-                method: "POST",
-                body: data,
-            });
-            const fileData = await res.json();
-            return fileData.secure_url;  // Use secure_url instead of url if available
-        } catch (err) {
-            console.error("Cloudinary upload error:", err);
-            return DEFAULT_PHOTO;
-        }
-    };
+    
 
 
     return (
