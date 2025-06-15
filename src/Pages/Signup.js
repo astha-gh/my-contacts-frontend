@@ -33,9 +33,9 @@ const Signup = () => {
                 body: JSON.stringify(formData)
             });
 
-           
+
             const data = await response.json();
-            
+
 
             if (response.ok) {
                 setMessage("Signup successful");
@@ -45,7 +45,7 @@ const Signup = () => {
                 setMessage(data.message || "Signup failed.");
             }
         } catch (error) {
-            
+
             setMessage("Something went wrong. Check console for details.");
         }
     };

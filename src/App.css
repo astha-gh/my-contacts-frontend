@@ -261,7 +261,8 @@ body {
     gap: 6px;
 }
 
-.btn-secondary, .btn-submit {
+.btn-secondary,
+.btn-submit {
     background-color: #4c78b6;
     color: white;
     border: none;
@@ -274,4 +275,48 @@ body {
 
 .btn-secondary:hover {
     background-color: #64748b;
+}
+
+input.form-input {
+    margin-bottom: 1rem;
+}
+
+.contact-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact-details {
+    flex-grow: 1;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.contact-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
